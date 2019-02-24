@@ -18,11 +18,9 @@ app.use(express.json({ limit: '10mb', extended: true }));
 app.get('/', (req, res) => res.send('Hi! This is transpiler service!'));
 
 app.post('/make', async (req, res) => {
+    const compilerOptions = req.body.options || { module: ts.ModuleKind.ES2015, jsx: 'react' };
     try {
-        let result = ts.transpileModule(req.body.source, {
-            compilerOptions: { module: ts.ModuleKind.ES2015, jsx: 'react' }
-        });
-
+        let result = ts.transpileModule(req.body.source, { compilerOptions });
         res.type('json').send({ result });
     } catch (err) {
         res.status(500).send(err.toString());
