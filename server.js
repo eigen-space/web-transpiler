@@ -2,9 +2,11 @@
 
 const express = require('express');
 const ts = require('typescript');
+const argv = require('minimist')(process.argv.slice(2));
 
 const app = express();
-const port = process.env.port || 3031;
+
+const port = argv.port || 3031;
 
 app.use(async (request, response, next) => {
     // Enable CORS
