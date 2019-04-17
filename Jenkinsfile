@@ -2,6 +2,5 @@
 
 runServiceProjectPipeline(
     project: 'web-transpiler',
-    deployPath: '/opt/services/transpiler',
     stages: [lint: false, test: false]
 )

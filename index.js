@@ -2,11 +2,14 @@
 
 const express = require('express');
 const ts = require('typescript');
-const argv = require('minimist')(process.argv.slice(2));
+const { parseProcessArgs } = require("@eigenspace/helper-scripts");
 
 const app = express();
 
-const port = argv.port || 3031;
+const params = parseProcessArgs(process.argv.slice(2));
+
+const httpParam = params.get('httpPort');
+const port = httpParam && httpParam.length ? Number(httpParam[0]) : 3031;
 
 app.use(async (request, response, next) => {
     // Enable CORS
@@ -29,20 +32,20 @@ app.post('/make', async (req, res) => {
     }
 });
 
-const server = app.listen(port, '0.0.0.0', () => console.log(`app listening on port ${port}!`));
+const index = app.listen(port, '0.0.0.0', () => console.log(`app listening on port ${port}!`));
 
 process.on('SIGTERM', shutDown);
 process.on('SIGINT', shutDown);
 
 let connections = [];
 
-server.on('connection', connection => {
+index.on('connection', connection => {
     connections.push(connection);
     connection.on('close', () => connections = connections.filter(curr => curr !== connection));
 });
 
 async function shutDown() {
-    server.close(() => {
+    index.close(() => {
         console.log('Closed out remaining connections');
         process.exit(0);
     });
