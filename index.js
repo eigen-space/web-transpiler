@@ -1,15 +1,16 @@
 'use strict';
 
+const { ArgumentParser } = require('@eigenspace/argument-parser');
 const express = require('express');
 const ts = require('typescript');
-const { parseProcessArgs } = require("@eigenspace/helper-scripts");
 
 const app = express();
+const parser = new ArgumentParser();
 
-const params = parseProcessArgs(process.argv.slice(2));
+const params = parser.get(process.argv.slice(2));
 
 const httpParam = params.get('httpPort');
-const port = httpParam && httpParam.length ? Number(httpParam[0]) : 3031;
+const port = httpParam || 3031;
 
 app.use(async (request, response, next) => {
     // Enable CORS
