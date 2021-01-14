@@ -1,0 +1,38 @@
+{
+    "name": "@eigenspace/transpiler",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/eigen-space/transpiler.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/eigen-space/transpiler/issues"
+    },
+    "homepage": "https://github.com/eigen-space/transpiler#readme",
+    "scripts": {
+        "start": "node index.js",
+        "build": "node ./dev/scripts/build.js",
+        "lint:markdown": "node ./node_modules/@eigenspace/codestyle/scripts/markdown-lint.js",
+        "hooks:pre-push": "yarn lint:markdown",
+        "script:update-deps-remote": "npx -p @eigenspace/helper-scripts update-deps"
+    },
+    "husky": {
+        "hooks": {
+            "pre-push": "yarn hooks:pre-push"
+        }
+    },
+    "dependencies": {
+        "@eigenspace/argument-parser": "1.0.3",
+        "@eigenspace/helper-scripts": "1.0.65",
+        "express": "4.16.4",
+        "typescript": "3.3.1"
+    },
+    "devDependencies": {
+        "@eigenspace/codestyle": "1.1.50",
+        "husky": "1.3.1"
+    }
+}
